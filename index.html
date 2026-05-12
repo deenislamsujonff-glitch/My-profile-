@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hacker Access | Sujon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: black; color: #0f0; font-family: 'Courier New', monospace; overflow: hidden; margin: 0; }
+        #c { position: fixed; top: 0; left: 0; z-index: -1; }
+        
+        /* লোডিং স্ক্রিন স্টাইল */
+        #loader {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; width: 100%; z-index: 200; display: none;
+        }
+
+        .content { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            text-align: center; background: rgba(0,0,0,0.9); padding: 30px; 
+            border: 1px solid #0f0; box-shadow: 0 0 20px #0f0; width: 85%; max-width: 320px;
+            border-radius: 15px; z-index: 100; display: none; opacity: 0; transition: opacity 0.5s ease;
+        }
+
+        .profile-img {
+            width: 90px; height: 90px; border-radius: 50%; border: 2px solid #0f0;
+            margin-bottom: 10px; box-shadow: 0 0 15px #0f0; object-fit: cover;
+        }
+
+        h2 { margin: 10px 0; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; }
+        .glitch { animation: glitch 1s linear infinite; color: #0f0; }
+        
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 #f00; }
+            50% { text-shadow: -2px 0 #00f; }
+            100% { text-shadow: 2px 0 #f00; }
+        }
+
+        .btn { 
+            display: flex; align-items: center; justify-content: flex-start;
+            color: #0f0; border: 1px solid rgba(0, 255, 0, 0.3); 
+            padding: 12px 18px; margin: 12px 0; text-decoration: none; 
+            font-weight: bold; background: rgba(0, 255, 0, 0.05);
+            cursor: pointer; transition: all 0.3s ease; border-radius: 8px; font-size: 14px;
+        }
+
+        .btn i { margin-right: 15px; font-size: 16px; width: 20px; }
+        
+        /* লাল ক্লিক ইফেক্ট */
+        .btn.active-red {
+            background-color: #ff0000 !important; color: #fff !important;
+            border-color: #ff0000 !important; box-shadow: 0 0 40px #ff0000 !important;
+        }
+
+        .btn-more {
+            border-color: #f00 !important; color: #f00 !important;
+            padding: 8px 15px !important; font-size: 11px !important;
+            width: fit-content; margin: 15px auto 0; justify-content: center !important;
+            background: rgba(255, 0, 0, 0.05) !important;
+        }
+
+        #more-page { display: none; border-color: #f00; box-shadow: 0 0 20px #f00; color: #f00; opacity: 0; }
+        #more-page .btn { color: #f00; border-color: rgba(255, 0, 0, 0.3); }
+
+        .particle { position: absolute; background: #ff0000; pointer-events: none; z-index: 1000; }
+        .back-btn { color: #888; text-decoration: none; font-size: 12px; margin-top: 15px; display: inline-block; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+
+<div id="loader">
+    <h2 class="glitch">INITIALIZING SYSTEM...</h2>
+    <p id="load-text" style="color: #0f0; font-size: 12px;">ESTABLISHING SECURE CONNECTION...</p>
+</div>
+
+<div class="content" id="main-page">
+    <img src="deenislam.jpg" alt="profile" class="profile-img">
+    <h2>Deenislam Sujon</h2> 
+    <p style="font-size: 11px; color: #0a0;">[ STATUS: ACCESS GRANTED ]</p>
+    
+    <a href="https://www.facebook.com/Deenislam9983" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
+        <i class="fab fa-facebook-f"></i> FACEBOOK ACCESS
+    </a>
+    <a href="https://youtube.com/@deenislamsujon1fdkggsh" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
+        <i class="fab fa-youtube"></i> YOUTUBE CHANNEL
+    </a>
+    <a href="https://wa.me/8801338719983" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
+        <i class="fab fa-whatsapp"></i> WHATSAPP DIRECT
+    </a>
+    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=sujon44sujon@gmail.com" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
+        <i class="fas fa-envelope"></i> SEND ENCRYPTED MAIL
+    </a>
+
+    <div class="btn btn-more" onclick="handleAction(event, this, 'more')">
+        <i class="fas fa-plus-circle"></i> MORE OPTIONS
+    </div>
+</div>
+
+<div class="content" id="more-page">
+    <h2>SECURE REPOSITORY</h2>
+    <a href="#" class="btn" onclick="handleAction(event, this, 'link')"><i class="fab fa-instagram"></i> INSTAGRAM</a>
+    <a href="#" class="btn" onclick="handleAction(event, this, 'link')"><i class="fab fa-telegram-plane"></i> TELEGRAM</a>
+    <a href="#" class="btn" onclick="handleAction(event, this, 'link')"><i class="fas fa-database"></i> PRIVATE DRIVE</a>
+    
+    <div class="back-btn" onclick="switchToMain()">
+        <i class="fas fa-arrow-left"></i> RETURN TO SYSTEM
+    </div>
+</div>
+
+<script>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playExplodeSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.5);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+    }
+
+    function createParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = `${x}px`; particle.style.top = `${y}px`;
+        particle.style.width = `${Math.random() * 6 + 2}px`;
+        particle.style.height = `${Math.random() * 6 + 2}px`;
+        document.body.appendChild(particle);
+
+        const dX = (Math.random() - 0.5) * 400;
+        const dY = (Math.random() - 0.5) * 400;
+
+        particle.animate([
+            { transform: 'translate(-50%, -50%)', opacity: 1 },
+            { transform: `translate(-50%, -50%) translate(${dX}px, ${dY}px)`, opacity: 0 }
+        ], { duration: 800, easing: 'ease-out' }).onfinish = () => particle.remove();
+    }
+
+    function handleAction(e, el, type) {
+        e.preventDefault();
+        const url = el.getAttribute('href');
+        playExplodeSound();
+        el.classList.add('active-red');
+        const rect = el.getBoundingClientRect();
+        for (let i = 0; i < 30; i++) createParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        
+        setTimeout(() => {
+            el.classList.remove('active-red');
+            if (type === 'more') switchToMore();
+            else if (url && url !== "#") window.open(url, '_blank');
+        }, 500);
+    }
+
+    function switchToMore() {
+        const main = document.getElementById('main-page');
+        const more = document.getElementById('more-page');
+        main.style.opacity = '0';
+        setTimeout(() => {
+            main.style.display = 'none';
+            more.style.display = 'block';
+            setTimeout(() => { more.style.opacity = '1'; }, 50);
+        }, 400);
+    }
+
+    function switchToMain() {
+        const main = document.getElementById('main-page');
+        const more = document.getElementById('more-page');
+        more.style.opacity = '0';
+        setTimeout(() => {
+            more.style.display = 'none';
+            main.style.display = 'block';
+            setTimeout(() => { main.style.opacity = '1'; }, 50);
+        }, 400);
+    }
+
+    // ম্যাট্রিক্স রেইন
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+    c.height = window.innerHeight; c.width = window.innerWidth;
+    var matrix = "01".split("");
+    var drops = [];
+    for(var x = 0; x < c.width/14; x++) drops[x] = 1;
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = "#0F0";
+        for(var i = 0; i < drops.length; i++) {
+            var text = matrix[Math.floor(Math.random()*matrix.length)];
+            ctx.fillText(text, i*14, drops[i]*14);
+            if(drops[i]*14 > c.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    setInterval(draw, 35);
+
+    // স্মার্ট লোডিং লজিক (একবারই হবে)
+    window.onload = function() {
+        const hasLoaded = sessionStorage.getItem('firstLoadDone');
+        const loader = document.getElementById('loader');
+        const main = document.getElementById('main-page');
+
+        if (!hasLoaded) {
+            // প্রথমবার ওপেন করলে লোডিং দেখাবে
+            loader.style.display = "block";
+            setTimeout(() => { document.getElementById('load-text').innerText = "ACCESSING DATABASE..."; }, 1000);
+            setTimeout(() => {
+                loader.style.display = "none";
+                main.style.display = "block";
+                setTimeout(() => { main.style.opacity = "1"; }, 50);
+                sessionStorage.setItem('firstLoadDone', 'true'); // সেভ করে রাখা হলো
+            }, 2500);
+        } else {
+            // ফেসবুক/ইউটিউব থেকে ব্যাক করলে সরাসরি মেইন পেজ
+            main.style.display = "block";
+            main.style.opacity = "1";
+        }
+    };
+</script>
+</body>
+</html>
+
