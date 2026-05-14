@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hacker Access | Sujon</title>
+    <title>Hacker Access | Deenislam</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background: black; color: #0f0; font-family: 'Courier New', monospace; overflow: hidden; margin: 0; }
         #c { position: fixed; top: 0; left: 0; z-index: -1; }
         
-        #loader {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; width: 100%; z-index: 200; display: none;
-        }
-
+        /* কন্টেন্ট ডিফল্টভাবে ব্লক রাখা হয়েছে যাতে লোডিং না লাগে */
         .content { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            text-align: center; background: rgba(0,0,0,0.9); padding: 30px; 
+            text-align: center; background: rgba(0,0,0,0.9); padding: 25px; 
             border: 1px solid #0f0; box-shadow: 0 0 20px #0f0; width: 85%; max-width: 320px;
-            border-radius: 15px; z-index: 100; display: none; opacity: 0; transition: opacity 0.5s ease;
+            border-radius: 15px; z-index: 100; display: block; opacity: 1; transition: opacity 0.5s ease;
         }
 
         .profile-img {
-            width: 100px; height: 100px; border-radius: 50%; border: 2px solid #0f0;
+            width: 90px; height: 90px; border-radius: 50%; border: 2px solid #0f0;
             margin-bottom: 10px; box-shadow: 0 0 15px #0f0; object-fit: cover;
         }
 
@@ -38,12 +34,12 @@
         .btn { 
             display: flex; align-items: center; justify-content: flex-start;
             color: #0f0; border: 1px solid rgba(0, 255, 0, 0.3); 
-            padding: 12px 18px; margin: 12px 0; text-decoration: none; 
+            padding: 12px 18px; margin: 10px 0; text-decoration: none; 
             font-weight: bold; background: rgba(0, 255, 0, 0.05);
             cursor: pointer; transition: all 0.3s ease; border-radius: 8px; font-size: 14px;
         }
 
-        .btn i { margin-right: 15px; font-size: 16px; width: 20px; }
+        .btn i { margin-right: 15px; font-size: 16px; width: 20px; text-align: center; }
         
         .btn.active-red {
             background-color: #ff0000 !important; color: #fff !important;
@@ -62,20 +58,33 @@
 
         .particle { position: absolute; background: #ff0000; pointer-events: none; z-index: 1000; }
         .back-btn { color: #888; text-decoration: none; font-size: 12px; margin-top: 15px; display: inline-block; cursor: pointer; }
+
+        /* Scaring Crash Effects */
+        @keyframes extremeShake {
+            0% { transform: translate(2px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-2deg); }
+            20% { transform: translate(-3px, 0px) rotate(3deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .crashing-mode { animation: extremeShake 0.05s infinite; filter: invert(1) contrast(3) hue-rotate(180deg); }
+        #crash-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; z-index: 9999; color: #ff0000; font-family: 'Courier New', monospace;
+            padding: 15px; overflow: hidden; box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
 <canvas id="c"></canvas>
 
-<div id="loader">
-    <h2 class="glitch">INITIALIZING SYSTEM...</h2>
-    <p id="load-text" style="color: #0f0; font-size: 12px;">ESTABLISHING SECURE CONNECTION...</p>
-</div>
+<div id="crash-overlay"><div id="crash-text" style="font-size: 10px; line-height: 1.2;"></div></div>
 
+<!-- মেইন পেজ সরাসরি ওপেন হবে -->
 <div class="content" id="main-page">
     <img src="deenislam.jpg" alt="Deenislam Sujon" class="profile-img">
-    <h2>Deenislam Sujon</h2> 
+    <h2 class="glitch">Deenislam Sujon</h2> 
     <p style="font-size: 11px; color: #0a0;">[ STATUS: ACCESS GRANTED ]</p>
     
     <a href="https://www.facebook.com/Deenislam9983" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
@@ -87,7 +96,7 @@
     <a href="https://wa.me/8801338719983" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
         <i class="fab fa-whatsapp"></i> WHATSAPP DIRECT
     </a>
-    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=sujon44sujon@gmail.com" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
+    <a href="mailto:sujon44sujon@gmail.com" class="btn" onclick="handleAction(event, this, 'link')">
         <i class="fas fa-envelope"></i> SEND ENCRYPTED MAIL
     </a>
 
@@ -98,23 +107,24 @@
 
 <div class="content" id="more-page">
     <h2>SECURE REPOSITORY</h2>
-    <a href="https://www.instagram.com/" target="_blank" class="btn" onclick="handleAction(event, this, 'link')"><i class="fab fa-instagram"></i> INSTAGRAM</a>
-    <a href="https://t.me/" target="_blank" class="btn" onclick="handleAction(event, this, 'link')"><i class="fab fa-telegram-plane"></i> TELEGRAM</a>
-    <a href="#" class="btn" onclick="handleAction(event, this, 'link')"><i class="fas fa-database"></i> PRIVATE DRIVE</a>
-    
-    <div class="back-btn" onclick="switchToMain()">
-        <i class="fas fa-arrow-left"></i> RETURN TO SYSTEM
-    </div>
+    <a href="https://www.instagram.com/" target="_blank" class="btn" onclick="handleAction(event, this, 'link')">
+        <i class="fab fa-instagram"></i> INSTAGRAM
+    </a>
+    <a href="#" class="btn" onclick="triggerScaryCrash(event)">
+        <i class="fas fa-database"></i> PRIVATE DRIVE
+    </a>
+    <div class="back-btn" onclick="switchToMain()"><i class="fas fa-arrow-left"></i> RETURN TO SYSTEM</div>
 </div>
 
 <script>
-    // Matrix Background Effect
+    // Matrix Background
     var c = document.getElementById("c");
     var ctx = c.getContext("2d");
     c.height = window.innerHeight; c.width = window.innerWidth;
     var matrix = "01".split("");
     var drops = [];
     for(var x = 0; x < c.width/14; x++) drops[x] = 1;
+
     function draw() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, c.width, c.height);
@@ -128,79 +138,81 @@
     }
     setInterval(draw, 35);
 
-    // Audio & Interaction Logic
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playExplodeSound() {
+
+    function playSound(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.5);
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        
+        if(type === 'normal') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.5);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        } else if(type === 'scary') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.alternate = setInterval(() => {
+                osc.frequency.value = Math.random() * 800 + 100;
+            }, 50);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        }
+
         osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+        osc.start();
+        if(type === 'normal') osc.stop(audioCtx.currentTime + 0.5);
+        return {osc, gain};
     }
 
-    function createParticle(x, y) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        particle.style.left = `${x}px`; particle.style.top = `${y}px`;
-        particle.style.width = `${Math.random() * 6 + 2}px`;
-        particle.style.height = `${Math.random() * 6 + 2}px`;
-        document.body.appendChild(particle);
-        const dX = (Math.random() - 0.5) * 400;
-        const dY = (Math.random() - 0.5) * 400;
-        particle.animate([
-            { transform: 'translate(-50%, -50%)', opacity: 1 },
-            { transform: `translate(-50%, -50%) translate(${dX}px, ${dY}px)`, opacity: 0 }
-        ], { duration: 800, easing: 'ease-out' }).onfinish = () => particle.remove();
+    function triggerScaryCrash(e) {
+        e.preventDefault();
+        const alarm = playSound('scary');
+        document.body.classList.add('crashing-mode');
+        const overlay = document.getElementById('crash-overlay');
+        overlay.style.display = 'block';
+        
+        const logs = ["KERNEL_PANIC", "MEMORY_CORRUPTION", "FATAL_EXCEPTION", "UI_HALTED", "SYSTEM_INJECTED", "ENCRYPTION_FAILED"];
+        let count = 0;
+        
+        const crashInterval = setInterval(() => {
+            const line = document.createElement('div');
+            line.innerText = `FATAL ERROR: ${logs[Math.floor(Math.random()*logs.length)]} [${(Math.random()*1000).toFixed(4)}]`;
+            document.getElementById('crash-text').appendChild(line);
+            overlay.scrollTop = overlay.scrollHeight;
+            
+            if(count++ > 80) {
+                clearInterval(crashInterval);
+                clearInterval(alarm.osc.frequency.alternate);
+                alarm.osc.stop();
+                overlay.innerHTML = "<div style='display:flex; justify-content:center; align-items:center; height:100vh;'><h1 style='color:white; font-size:20px;'>DEVICE DISCONNECTED...</h1></div>";
+                setTimeout(() => { location.reload(); }, 3000);
+            }
+        }, 30);
     }
 
     function handleAction(e, el, type) {
         e.preventDefault();
-        const url = el.getAttribute('href');
-        playExplodeSound();
+        playSound('normal');
         el.classList.add('active-red');
-        const rect = el.getBoundingClientRect();
-        for (let i = 0; i < 30; i++) createParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
         setTimeout(() => {
             el.classList.remove('active-red');
             if (type === 'more') switchToMore();
-            else if (url && url !== "#") window.open(url, '_blank');
+            else window.open(el.getAttribute('href'), '_blank');
         }, 500);
     }
 
     function switchToMore() {
-        document.getElementById('main-page').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('main-page').style.display = 'none';
-            document.getElementById('more-page').style.display = 'block';
-            setTimeout(() => { document.getElementById('more-page').style.opacity = '1'; }, 50);
-        }, 400);
+        document.getElementById('main-page').style.display = 'none';
+        document.getElementById('more-page').style.display = 'block';
+        setTimeout(() => { document.getElementById('more-page').style.opacity = '1'; }, 50);
     }
 
     function switchToMain() {
-        document.getElementById('more-page').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('more-page').style.display = 'none';
-            document.getElementById('main-page').style.display = 'block';
-            setTimeout(() => { document.getElementById('main-page').style.opacity = '1'; }, 50);
-        }, 400);
+        document.getElementById('more-page').style.display = 'none';
+        document.getElementById('main-page').style.display = 'block';
     }
-
-    window.onload = function() {
-        const loader = document.getElementById('loader');
-        const main = document.getElementById('main-page');
-        loader.style.display = "block";
-        setTimeout(() => { document.getElementById('load-text').innerText = "ACCESSING DATABASE..."; }, 1000);
-        setTimeout(() => {
-            loader.style.display = "none";
-            main.style.display = "block";
-            setTimeout(() => { main.style.opacity = "1"; }, 50);
-        }, 2500);
-    };
 </script>
 </body>
 </html>
